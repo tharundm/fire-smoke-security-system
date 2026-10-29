@@ -27,3 +27,11 @@ Desktop.ini
 # Logs
 logs/
 *.log
+
+# Generated/runtime artifacts
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+.env
+*.exe

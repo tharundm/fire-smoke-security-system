@@ -116,7 +116,7 @@ When a person holds a smartphone in front of the camera displaying a fire video 
 
 ### Step 1: Open PowerShell and Navigate to Project
 ```powershell
-cd c:\Users\poojitha\OneDrive\Attachments\Desktop\minor_project\fire_smoke_security_system
+cd C:\Users\poojitha\OneDrive\Attachments\Desktop\minor_c_project\fire_smoke_security_system
 ```
 
 ### Step 2: Create and Activate Virtual Environment
@@ -169,6 +169,19 @@ Open your web browser and navigate to:
    - Click **Ack** on an active incident to acknowledge receipt.
    - Click **Resolve** once the area is confirmed safe to transition the incident to `RESOLVED`.
 5. **Settings:** Click **⚙️ Settings** to modify camera name, location, and confidence thresholds on the fly.
+
+### Deployment (Flask)
+
+The primary application is the Flask service in `app.py`. For a Linux WSGI host such as Render, use:
+
+```text
+Build command: pip install -r requirements.txt
+Start command: gunicorn --workers 1 --bind 0.0.0.0:$PORT "app:create_app()"
+```
+
+Use one worker because camera capture and monitoring state are process-local. A cloud-hosted Flask service cannot access a webcam attached to an operator's computer; it can only open a camera source reachable from the server, such as an appropriately secured RTSP/IP camera. Do not commit camera credentials or notification secrets.
+
+`streamlit_app.py` is a separate, optional Streamlit application with browser-side WebRTC camera capture. It is not the Flask dashboard entry point; deploying that option is a separate architecture choice and requires browser camera permission, HTTPS, and a host/network that permits WebRTC traffic.
 
 ---
 
@@ -224,7 +237,7 @@ pytest tests -v
 
 Expected output:
 ```
-============================= 42 passed in 6.33s ==============================
+============================= 85 passed in 19.71s ==============================
 ```
 
 The 42 tests include:
